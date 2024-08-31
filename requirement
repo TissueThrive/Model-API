@@ -1,0 +1,28 @@
+1. conda create -n yolov8-env python=3.10 //yolov8-env (or any name you prefer)
+2. conda activate yolov8-env
+
+3. pip install fastapi uvicorn pydantic torch ultralytics pillow
+4. conda install pytorch torchvision torchaudio cpuonly -c pytorch
+5. pip install python-multipart
+
+6. pip install opencv-python-headless
+    Only, If the above command not works in anaconda prompt, run as an administrator run below code.
+    pip install --user opencv-python-headless
+
+7. If there is any errors, do this.
+    pip uninstall torch torchvision torchaudio
+    conda install pytorch torchvision torchaudio cpuonly -c pytorch
+
+8. Set Up Project in VS Code
+    Press Ctrl+Shift+P (Windows/Linux) or Cmd+Shift+P (macOS) to open the Command Palette.
+    Type Python: Select Interpreter and choose the "yolov8-env" environment.
+
+9. uvicorn main:app --reload //Run the FastAPI app using Uvicorn
+    By default, it will run on http://127.0.0.1:8000/docs.
+
+API's
+1. http://127.0.0.1:8000/predict/plant_status_identification      Browning = not healthy plant
+2. http://127.0.0.1:8000/predict/callus_identification            identify Callus = valid image, process to next step
+3. http://127.0.0.1:8000/predict/callus_shape_identification      Frilly-shape or Ear-shape = next step
+4. http://127.0.0.1:8000/predict/callus_area_calculation          area = 1.71cm2
+5. http://127.0.0.1:8000/predict/callus_color_identification (not working)

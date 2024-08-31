@@ -1,0 +1,49 @@
+import os
+from fastapi import APIRouter, UploadFile, File, Response
+from ultralytics import YOLO
+from io import BytesIO
+from PIL import Image
+import cv2
+import numpy as np
+
+router = APIRouter()
+
+model_path = os.path.join(os.path.dirname(__file__), '../models/callus_identify_model.pt')
+model = YOLO(model_path)
+
+@router.post("/callus_identification")
+async def predictCallus(file: UploadFile = File(...)):
+    img = Image.open(BytesIO(await file.read()))
+    img_cv2 = np.array(img)
+    img_cv2 = cv2.cvtColor(img_cv2, cv2.COLOR_RGB2BGR)
+
+    results = model(img)
+
+    class_name = "Callus"
+    color = (0, 255, 0)
+
+    predictions_metadata = []
+
+    if results[0].masks is not None:
+        masks = results[0].masks.data
+        confidences = results[0].boxes.conf
+
+        for mask, confidence in zip(masks, confidences):
+            mask_np = mask.cpu().numpy()
+            mask_np = cv2.resize(mask_np, (img_cv2.shape[1], img_cv2.shape[0]))
+            img_cv2[mask_np > 0.5] = img_cv2[mask_np > 0.5] * 0.5 + np.array(color) * 0.5
+
+            predictions_metadata.append({
+                "label": class_name,
+                "confidence": float(confidence)
+            })
+
+    img_cv2 = cv2.cvtColor(img_cv2, cv2.COLOR_BGR2RGB)
+    img_pil = Image.fromarray(img_cv2)
+    buf = BytesIO()
+    img_pil.save(buf, format='JPEG')
+    buf.seek(0)
+
+    return Response(content=buf.getvalue(), media_type="image/jpeg", headers={
+        "X-Predictions": str(predictions_metadata)
+    })

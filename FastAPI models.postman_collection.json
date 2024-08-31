@@ -1,0 +1,117 @@
+{
+	"info": {
+		"_postman_id": "6216f6cc-7c24-4ee1-9214-be31c520df35",
+		"name": "FastAPI models",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23306674"
+	},
+	"item": [
+		{
+			"name": "plant_status_identification",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"description": "ddsd",
+							"type": "file",
+							"src": "/C:/Users/DK/Downloads/2.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/predict/plant_status_identification",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"predict",
+						"plant_status_identification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "callus_identification",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"description": "ddsd",
+							"type": "file",
+							"src": "/C:/Users/DK/Downloads/Screenshot 2024-08-23 041556.png"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": [],
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/predict/callus_identification",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"predict",
+						"callus_identification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "callus_shape_identification",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/DK/Downloads/Screenshot 2024-08-23 041556.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/predict/callus_shape_identification",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"predict",
+						"callus_shape_identification"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
